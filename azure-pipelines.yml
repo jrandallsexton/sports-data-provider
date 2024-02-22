@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '1acdd19e-31e5-4557-8874-0bae6a8db0b9'
   imageRepository: 'sportsdataprovider'
   containerRegistry: 'sportdeets.azurecr.io'
-  dockerfilePath: 'Dockerfile'
+  dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -33,7 +33,7 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: app/Dockerfile
+        dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
