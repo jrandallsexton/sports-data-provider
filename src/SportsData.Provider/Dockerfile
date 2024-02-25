@@ -8,7 +8,7 @@ EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["SportsData.Provider/SportsData.Provider.csproj", "src/SportsData.Provider/"]
+COPY ["src/SportsData.Provider/SportsData.Provider.csproj", "SportsDataProvider/"]
 RUN dotnet restore "./src/SportsData.Provider/SportsData.Provider.csproj"
 COPY . .
 WORKDIR "/src/src/SportsData.Provider"
