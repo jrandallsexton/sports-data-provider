@@ -18,9 +18,9 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-       containerRegistry: '1acdd19e-31e5-4557-8874-0bae6a8db0b9'
-       repository: 'sportsdataprovider'
        command: buildAndPush
+       repository: 'sportsdataprovider'
+       containerRegistry: 'sportdeets.azurecr.io'
        Dockerfile: '**/Dockerfile'
        tags: '$(Build.BuildId)'
 # variables:
