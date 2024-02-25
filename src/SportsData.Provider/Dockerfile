@@ -11,7 +11,7 @@ WORKDIR /src
 COPY ["src/SportsData.Provider/SportsData.Provider.csproj", "src/SportsData.Provider/"]
 RUN dotnet restore "./src/SportsData.Provider/SportsData.Provider.csproj"
 COPY . .
-WORKDIR "/src/SportsData.Provider"
+WORKDIR "/src/src/SportsData.Provider"
 RUN dotnet build "./SportsData.Provider.csproj" -c Release -o /app/build
 
 FROM build AS publish
