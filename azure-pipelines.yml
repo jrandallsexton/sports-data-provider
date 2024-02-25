@@ -11,15 +11,18 @@ pool:
 resources:
 - repo: self
 
-steps:
-- checkout: self
-- task: Docker@2
-  inputs:
-    containerRegistry: 'sportdeets'
-    repository: 'sportsdataprovider'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-
+stages:
+- stage: BuildApp
+  jobs:
+  - job: BuildPushImage
+    steps:
+    - task: Docker@2
+      inputs:
+       containerRegistry: 'sportdeets.azurecr.io'
+       repository: 'sportsdataprovider'
+       command: buildAndPush
+       Dockerfile: '**/Dockerfile'
+       tags: '$(Build.BuildId)'
 # variables:
 #   # Container registry service connection established during pipeline creation
 #   dockerRegistryServiceConnection: '1acdd19e-31e5-4557-8874-0bae6a8db0b9'
@@ -31,16 +34,8 @@ steps:
 #   # Agent VM image name
 #   vmImageName: 'ubuntu-latest'
 
-# steps:
-# - task: Docker@2
-#   displayName: Build an image
-#   inputs:
-#     repository: $(imageName)
-#     command: build
-#     Dockerfile: app/Dockerfile
-
 # stages:
-# - stage: Build
+# - stage: BuildApp
 #   displayName: Build and push stage
 #   jobs:
 #   - job: Build
