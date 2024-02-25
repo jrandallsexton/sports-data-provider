@@ -11,9 +11,10 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '31f2836a-84b3-4ad0-bf15-f4ea41754d06'
-  imageRepository: 'jrandallsextonsportsdataprovider'
+  imageRepository: 'sportsdataprovider'
   containerRegistry: 'sportdeetscr.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/src/SportsData.Provider/Dockerfile'
+  #dockerfilePath: '$(Build.SourcesDirectory)/src/SportsData.Provider/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
