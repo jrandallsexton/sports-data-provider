@@ -5,36 +5,55 @@
 trigger:
 - main
 
+pool:
+   vmImage: 'ubuntu-latest'
+
 resources:
 - repo: self
 
-variables:
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '1acdd19e-31e5-4557-8874-0bae6a8db0b9'
-  imageRepository: 'sportsdataprovider'
-  containerRegistry: 'sportdeets.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
+steps:
+- checkout: self
+- task: Docker@2
+  inputs:
+    containerRegistry: 'sportdeets'
+    repository: 'sportsdataprovider'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
 
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+# variables:
+#   # Container registry service connection established during pipeline creation
+#   dockerRegistryServiceConnection: '1acdd19e-31e5-4557-8874-0bae6a8db0b9'
+#   imageRepository: 'sportsdataprovider'
+#   containerRegistry: 'sportdeets.azurecr.io'
+#   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+#   tag: '$(Build.BuildId)'
 
-stages:
-- stage: Build
-  displayName: Build and push stage
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - checkout: self
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+#   # Agent VM image name
+#   vmImageName: 'ubuntu-latest'
+
+# steps:
+# - task: Docker@2
+#   displayName: Build an image
+#   inputs:
+#     repository: $(imageName)
+#     command: build
+#     Dockerfile: app/Dockerfile
+
+# stages:
+# - stage: Build
+#   displayName: Build and push stage
+#   jobs:
+#   - job: Build
+#     displayName: Build
+#     pool:
+#       vmImage: $(vmImageName)
+#     steps:
+#     - task: Docker@2
+#       displayName: Build and push an image to container registry
+#       inputs:
+#         command: buildAndPush
+#         repository: $(imageRepository)
+#         dockerfile: $(dockerfilePath)
+#         containerRegistry: $(dockerRegistryServiceConnection)
+#         tags: |
+#           $(tag)
