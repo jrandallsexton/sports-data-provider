@@ -25,12 +25,35 @@ stages:
   - job: Test
     displayName: Test
     steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET 8 SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.x'
+        includePreviewVersions: true
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet Restore'
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        feedsToUse: 'select'
+    
+    - task: VSBuild@1
+      displayName: 'Build sports-data-provider solution'
+      inputs:
+        solution: '**\*.sln'
+        restoreNugetPackages: true
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+
     - task: DotNetCoreCLI@2
       displayName: 'Run Unit Tests'
       inputs:
         command: 'test'
         projects: '**/*.csproj'
         testRunTitle: 'sdProvider-tests-unit'
+
 - stage: Build
   displayName: Build and push stage
   jobs:
