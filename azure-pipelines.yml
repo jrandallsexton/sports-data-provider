@@ -20,6 +20,17 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
+- stage: Test
+  jobs:
+  - job: Test
+    displayName: Test
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Unit Tests'
+      inputs:
+        command: 'test'
+        projects: '**/*.csproj'
+        testRunTitle: 'sdCore-tests-unit'
 - stage: Build
   displayName: Build and push stage
   jobs:
