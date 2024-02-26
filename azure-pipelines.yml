@@ -5,6 +5,9 @@
 trigger:
 - main
 
+pool:
+  vmImage: 'windows-latest'
+
 resources:
 - repo: self
 
@@ -19,9 +22,53 @@ variables:
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
+  # Build Solution Vars
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  Major: '1'
+  Minor: '0'
+  Patch: '1'
+  PackageVersion: '1.0.1'
+
 stages:
-- stage: Build
-  displayName: Build and push stage
+- stage: BuildAndTest
+  jobs:
+  - job: BuildAndTest
+    displayName: BuildAndTest
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET 8 SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.x'
+        includePreviewVersions: true
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet Restore'
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        feedsToUse: 'select'
+        vstsFeed: '2bb0cd0d-fa6e-42f0-9b7e-9cc1ce065e55/de94ed5a-8390-4547-bdd9-f975a712aa70'
+    
+    - task: VSBuild@1
+      displayName: 'Build sports-data-provider solution'
+      inputs:
+        solution: '**\*.sln'
+        restoreNugetPackages: true
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Unit Tests'
+      inputs:
+        command: 'test'
+        projects: '**/*.csproj'
+        testRunTitle: 'sdProvider-tests-unit'
+
+- stage: BuildImagePushACR
+  displayName: Build Image & Push to ACR
   jobs:
   - job: Build
     displayName: Build
