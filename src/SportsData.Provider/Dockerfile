@@ -7,6 +7,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY [".", "./src/SportsData.Provider/"]
+RUN dotnet nuget add source https://pkgs.dev.azure.com/jrandallsexton/sport-deets/_packaging/sports-data-nuget/nuget/v3/index.json
 RUN dotnet restore "./src/SportsData.Provider/SportsData.Provider.csproj"
 COPY . .
 WORKDIR "/src/src/SportsData.Provider"
