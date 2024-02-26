@@ -32,10 +32,10 @@ variables:
   PackageVersion: '1.0.1'
 
 stages:
-- stage: Test
+- stage: BuildAndTest
   jobs:
-  - job: Test
-    displayName: Test
+  - job: BuildAndTest
+    displayName: BuildAndTest
     steps:
     - task: UseDotNet@2
       displayName: 'Use .NET 8 SDK'
@@ -67,8 +67,8 @@ stages:
         projects: '**/*.csproj'
         testRunTitle: 'sdProvider-tests-unit'
 
-- stage: Build
-  displayName: Build and push stage
+- stage: BuildImagePushACR
+  displayName: Build Image & Push to ACR
   jobs:
   - job: Build
     displayName: Build
