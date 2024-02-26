@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FA9FF77B-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{282B1B38-D659-46DC-A861-D38709A45ED8}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -16,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsData.Provider", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsData.Provider.Tests.Unit", "test\SportsData.Provider.Tests.Unit\SportsData.Provider.Tests.Unit.csproj", "{FCAF55A6-8FD8-42DA-B69B-962D7E5EE1EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportsData.Provider.Tests.Integration", "test\SportsData.Provider.Tests.Integration\SportsData.Provider.Tests.Integration.csproj", "{0EF4F816-21E9-4117-80F5-9E058FDEA936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsData.Provider.Tests.Integration", "test\SportsData.Provider.Tests.Integration\SportsData.Provider.Tests.Integration.csproj", "{0EF4F816-21E9-4117-80F5-9E058FDEA936}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
