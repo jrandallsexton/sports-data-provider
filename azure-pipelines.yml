@@ -31,6 +31,10 @@ variables:
   Patch: '1'
   PackageVersion: '1.0.1'
 
+  # Deploy Vars
+  azureSubscription: 'dev-sports-data-connection'
+  appName: 'dev-sdprovider'
+
 stages:
 - stage: BuildAndTest
   jobs:
@@ -84,3 +88,22 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+  - job: Deploy
+    steps:
+    - task: AzureWebAppContainer@1
+      displayName: 'Azure Web App on Container Deploy'
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appName: $(appName)
+        containers: $(containerRegistry)/$(imageRepository):$(tag)
+# - stage: DeployToDev
+#   displayName: Deploy to Dev
+#   jobs:
+#   - job: Deploy
+#     steps:
+#     - task: AzureWebAppContainer@1
+#       displayName: 'Azure Web App on Container Deploy'
+#       inputs:
+#         azureSubscription: $(azureSubscription)
+#         appName: $(appName)
+#         containers: $(containerRegistry)/$(imageRepository):$(tag)
