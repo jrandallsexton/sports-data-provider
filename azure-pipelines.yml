@@ -32,7 +32,7 @@ variables:
   PackageVersion: '1.0.1'
 
   # Deploy Vars
-  azureSubscription: 'dev-sdProvider'
+  azureSubscription: 'dev-sports-data-connection'
   appName: 'dev-sdproducer'
 
 stages:
