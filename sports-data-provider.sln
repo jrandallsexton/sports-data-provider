@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsData.Provider.Tests.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportsData.Provider.Tests.Integration", "test\SportsData.Provider.Tests.Integration\SportsData.Provider.Tests.Integration.csproj", "{0EF4F816-21E9-4117-80F5-9E058FDEA936}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{20E539CD-D72B-422B-AE9F-542F995ABAA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{0EF4F816-21E9-4117-80F5-9E058FDEA936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EF4F816-21E9-4117-80F5-9E058FDEA936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EF4F816-21E9-4117-80F5-9E058FDEA936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E539CD-D72B-422B-AE9F-542F995ABAA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E539CD-D72B-422B-AE9F-542F995ABAA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E539CD-D72B-422B-AE9F-542F995ABAA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E539CD-D72B-422B-AE9F-542F995ABAA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

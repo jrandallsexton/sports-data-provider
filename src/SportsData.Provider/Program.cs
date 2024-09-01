@@ -1,12 +1,16 @@
 
+using Hangfire;
+
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
+using SportsData.Provider.Infrastructure.Data;
 using SportsData.Provider.Middleware;
 
 namespace SportsData.Provider
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +24,21 @@ namespace SportsData.Provider
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.ConfigureHangfire(builder.Configuration);
+
+            var config = builder.Configuration["ConnectionStrings:ProviderDataContext"];
+
+            builder.Services.AddDbContext<ProviderDataContext>(options =>
+            {
+                options.EnableSensitiveDataLogging();
+                options.UseSqlServer(config,
+                    b => b.MigrationsAssembly("SportsData.Provider"));
+            });
+
+            await using var serviceProvider = builder.Services.BuildServiceProvider();
+            var context = serviceProvider.GetRequiredService<ProviderDataContext>();
+            await context.Database.MigrateAsync();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,6 +46,10 @@ namespace SportsData.Provider
             //{
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseHangfireDashboard("/dashboard", new DashboardOptions
+            {
+                Authorization = new[] { new DashboardAuthFilter() }
+            });
             //}
 
             app.UseHttpsRedirection();
@@ -40,7 +63,7 @@ namespace SportsData.Provider
 
             app.MapControllers();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }
